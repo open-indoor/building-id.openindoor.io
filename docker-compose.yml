@@ -1,0 +1,29 @@
+version: "3.9"
+   
+services:
+  get_building_data:
+    build: get_building_data
+    image: my_python
+    working_dir: /openindoor
+    volumes:
+      - ./get_building_data:/openindoor
+      - ./get_building_data/Caddyfile:/etc/caddy/Caddyfile
+    command: /openindoor/get_building_data.sh
+    ports:
+      - "8098:80"
+
+  get_departement:
+    build: get_departement
+    image: my_python
+    working_dir: /openindoor
+    volumes:
+      - ./get_departement/:/openindoor/
+    environment:
+      FLASK_APP: get_departement
+      FLASK_ENV: development
+    command: flask run --host=0.0.0.0
+    ports:
+      - "8091:5000"
+
+  nettools:
+    image: travelping/nettools

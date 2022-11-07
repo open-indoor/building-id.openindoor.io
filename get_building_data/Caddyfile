@@ -1,0 +1,15 @@
+:80 {
+
+    log
+
+    handle * {
+		reverse_proxy unix//var/run/fcgiwrap.socket {
+			transport fastcgi {
+    		    env SCRIPT_FILENAME /openindoor/get_building_data.py
+		        split ""
+			}
+		}
+    }
+
+
+}
